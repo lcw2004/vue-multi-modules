@@ -8,9 +8,8 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
+  // 获取多入口, 注意这个路径， 至于为什么是 ./src仍然需要了解，我觉得应该是 ../src
+  entry: utils.getEntries('./src/module/**/*.js'),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
