@@ -48,25 +48,22 @@ var webpackConfig = merge(baseWebpackConfig, {
         safe: true
       }
     }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    // new HtmlWebpackPlugin({
-    //   filename: process.env.NODE_ENV === 'testing'
-    //     ? 'index.html'
-    //     : config.build.index,
-    //   template: 'index.html',
-    //   inject: true,
-    //   minify: {
-    //     removeComments: true,
-    //     collapseWhitespace: true,
-    //     removeAttributeQuotes: true
-    //     // more options:
-    //     // https://github.com/kangax/html-minifier#options-quick-reference
-    //   },
-    //   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    //   chunksSortMode: 'dependency'
-    // }),
+    new HtmlWebpackPlugin({
+      filename: process.env.NODE_ENV === 'testing'
+        ? 'index.html'
+        : config.build.index,
+      template: 'index.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -95,7 +92,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    ...utils.getHtmlWebpackPluginConfigs()
+    ...utils.getHtmlWebpackPlugins()
   ]
 })
 
@@ -121,7 +118,5 @@ if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
-
-// webpackConfig.plugins.concat(utils.getHtmlWebpackPluginConfigs())
 
 module.exports = webpackConfig

@@ -97,9 +97,12 @@ exports.getEntries = function (globPath) {
   return entries;
 }
 
-exports.getHtmlWebpackPluginConfigs = function () {
+// generate dist index.html with correct asset hash for caching.
+// you can customize output by editing /index.html
+// see https://github.com/ampedandwired/html-webpack-plugin
+exports.getHtmlWebpackPlugins = function () {
   var pages = this.getEntries('./src/module/**/*.html')
-  var htmlWebpackPluginConfigs = []
+  var htmlWebpackPlugins = []
   for (var page in pages) {
     // 配置生成的html文件，定义路径等
     var conf = {
@@ -112,9 +115,18 @@ exports.getHtmlWebpackPluginConfigs = function () {
       // filter：将数据过滤，然后返回符合要求的数据，Object.keys是获取JSON对象中的每个key
       excludeChunks: Object.keys(pages).filter(item => {
         return (item != page)
-      })
+      }),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
     }
-    htmlWebpackPluginConfigs.push(new HtmlWebpackPlugin(conf))
+    htmlWebpackPlugins.push(new HtmlWebpackPlugin(conf))
   }
-  return htmlWebpackPluginConfigs
+  return htmlWebpackPlugins
 }
