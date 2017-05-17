@@ -1,4 +1,4 @@
-# vue-muti-modules
+# vue-multi-modules
 
 Vue多页面工程，参考[https://github.com/jarvan4dev/vue-multi-page.git](https://github.com/jarvan4dev/vue-multi-page.git)改造而来。
 
@@ -20,13 +20,6 @@ Vue多模块工程的核心地方有两个：
 vue-cli里面这两个地方是单个的，改为每一个模块一个即为多模块工程。
 
 具体的代码在utils.getEntries和utils.getHtmlWebpackPlugins里面
-
-
-
-
-
-
-
 
 
 ## Build Setup
